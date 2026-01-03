@@ -131,11 +131,13 @@ export default function ProductPageClient({ id, initialMeal }: Props) {
       <section className="flex flex-col gap-10 md:flex-row md:items-start">
         {/* Left column */}
         <section className="w-full md:w-1/2">
-          <figure className="overflow-hidden rounded-3xl bg-gray-100 shadow-sm">
+          <figure className="relative aspect-[4/3] max-h-[420px] overflow-hidden rounded-3xl bg-gray-100 shadow-sm">
             <Image
               src={meal.strMealThumb}
               alt={meal.strMeal}
-              className="h-full w-full max-h-[420px] object-cover object-center"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover object-center"
             />
           </figure>
         </section>

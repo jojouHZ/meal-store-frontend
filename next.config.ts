@@ -5,6 +5,15 @@ const nextConfig = {
   turbopack: {
     root: __dirname, // or '/home/jojou/frontend/mealstore/meal-store'
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.themealdb.com",
+        pathname: "/images/**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

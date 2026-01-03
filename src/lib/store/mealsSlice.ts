@@ -46,7 +46,6 @@ const mealsSlice = createSlice({
       state.meals = state.meals.filter(
         (meal) => meal.idMeal !== action.payload
       );
-      console.log("delete pressed, id =", action.payload);
     },
     createMeal(state, action: PayloadAction<CreateMealForm>) {
       const { strMeal, strMealThumb, strInstructions } = action.payload;

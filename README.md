@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Meal Store
 
-## Getting Started
+A small Next.js app that browses meals from [TheMealDB](https://www.themealdb.com), allows creating local custom meals, and provides a polished Koreana/Farfetch-style catalog UI.
 
-First, run the development server:
+## Tech Stack
+
+- **Next.js 16** (App Router, `app/`) with TypeScript[web:39]
+- **Redux Toolkit** for meals and categories state management[web:50]
+- **React Hook Form + Zod** for form validation
+- **Tailwind CSS** for layout and styling
+- **TheMealDB API** for public meals data[web:29]
+- **Jest** + **Testing Library** for unit tests[web:40][web:47]
+
+## Installation
+
+Prerequisites:
+
+- Node.js 20+ (LTS recommended)[web:39]
+- Yarn or npm
+
+Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/<your-username>/meal-store-frontend.git
+cd meal-store-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+# Yarn
+yarn install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# or npm
+npm install
+```
 
-## Learn More
+Run development server:
 
-To learn more about Next.js, take a look at the following resources:
+```
+yarn dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# or
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open http://localhost:3000 in your browser.
 
-## Deploy on Vercel
+Build and run production:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+# build & start
+yarn build
+yarn start
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# or
+npm run build
+npm run start
+```
+
+Run tests:
+
+```
+yarn test
+```
+
+## Features
+
+- Category-based catalog loaded from TheMealDB
+- Category selection persisted in `localStorage`
+- Filter by:
+  - All meals
+  - Liked meals
+- Text search within the current category
+- Pagination with consistent card height (no layout jumps)
+- Create, edit and delete local meals (IDs like `local-*`)
+- Detailed product page with editable fields (name, image URL, instructions)
+
+## UI Highlights
+
+- Main layout: header + filters are fixed in view, scroll only the cards grid
+- **MealCard** component:
+  - Next.js `Image` with remote image support and responsive `sizes`[web:14][web:21]
+  - Like/delete icon buttons with accessible `aria-label`s[web:60]
+  - Clean card hover animation and line-clamped titles
+- **CatalogHeader** component:
+  - “All / Liked” toggle
+  - Category `<select>` with disabled placeholder option
+  - Responsive search input and “New meal” action
+- **Pagination** component:
+  - Rounded page buttons and arrow icons
+  - Proper `aria-label` for navigation and `aria-current` for the active page
+
+## State Management
+
+- `mealsSlice`:
+
+  - `fetchMeals(category)` loads meals from TheMealDB and stores them with `strCategory`
+  - `createMeal`, `updateMeal`, `deleteMeal`, `toggleLike`
+  - `setFilter`, `setSearch`, `setPage`, `setPageSize`
+
+- `categoriesSlice`:
+  - `fetchCategories()` loads categories from TheMealDB
+  - `selectCategory` stores the current category and is hydrated from `localStorage`
+
+## Testing
+
+Unit tests cover the core Redux logic:
+
+- **mealsSlice** tests:
+
+  - `toggleLike` toggles `isLiked`
+  - `deleteMeal` removes a meal by `idMeal`
+  - `createMeal` prepends a new local meal
+  - `setFilter` and `setSearch` reset `page` to `1`
+  - `setPage` does not go below `1`
+  - `fetchMeals.pending / fulfilled / rejected` update `loading` and `meals` correctly[web:40][web:49]
+
+- **categoriesSlice** tests:
+  - `selectCategory` sets and clears the selected category
+  - `fetchCategories.pending / fulfilled` update `loading` and `categories`

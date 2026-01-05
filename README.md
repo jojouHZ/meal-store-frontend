@@ -4,18 +4,18 @@ A small Next.js app that browses meals from [TheMealDB](https://www.themealdb.co
 
 ## Tech Stack
 
-- **Next.js 16** (App Router, `app/`) with TypeScript[web:39]
-- **Redux Toolkit** for meals and categories state management[web:50]
+- **Next.js 16** (App Router, `app/`) with TypeScript
+- **Redux Toolkit** for meals and categories state management
 - **React Hook Form + Zod** for form validation
 - **Tailwind CSS** for layout and styling
-- **TheMealDB API** for public meals data[web:29]
-- **Jest** + **Testing Library** for unit tests[web:40][web:47]
+- **TheMealDB API** for public meals data
+- **Jest** + **Testing Library** for unit tests
 
 ## Installation
 
 Prerequisites:
 
-- Node.js 20+ (LTS recommended)[web:39]
+- Node.js 20+ (LTS recommended)
 - Yarn or npm
 
 Clone the repository:
@@ -80,8 +80,8 @@ yarn test
 
 - Main layout: header + filters are fixed in view, scroll only the cards grid
 - **MealCard** component:
-  - Next.js `Image` with remote image support and responsive `sizes`[web:14][web:21]
-  - Like/delete icon buttons with accessible `aria-label`s[web:60]
+  - Next.js `Image` with remote image support and responsive `sizes`
+  - Like/delete icon buttons with accessible `aria-label`s
   - Clean card hover animation and line-clamped titles
 - **CatalogHeader** component:
   - “All / Liked” toggle
@@ -114,7 +114,7 @@ Unit tests cover the core Redux logic:
   - `createMeal` prepends a new local meal
   - `setFilter` and `setSearch` reset `page` to `1`
   - `setPage` does not go below `1`
-  - `fetchMeals.pending / fulfilled / rejected` update `loading` and `meals` correctly[web:40][web:49]
+  - `fetchMeals.pending / fulfilled / rejected` update `loading` and `meals` correctly
 
 - **categoriesSlice** tests:
   - `selectCategory` sets and clears the selected category
